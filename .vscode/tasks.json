@@ -15,18 +15,24 @@
     {
       "label": "전체 테스트",
       "type": "shell",
-      "command": ".venv/bin/python",
-      "windows": { "command": ".venv\\Scripts\\python.exe" },
-      "args": ["-m", "pytest"],
+      "command": "bash",
+      "args": ["-c", "[ -d .venv ] || bash setup.sh; .venv/bin/python -m pytest"],
+      "windows": {
+        "command": "powershell",
+        "args": ["-c", "if (!(Test-Path .venv)) { .\\setup.ps1 }; .\\.venv\\Scripts\\python.exe -m pytest"]
+      },
       "group": { "kind": "test", "isDefault": true },
       "problemMatcher": []
     },
     {
       "label": "특정 번호만 테스트",
       "type": "shell",
-      "command": ".venv/bin/python",
-      "windows": { "command": ".venv\\Scripts\\python.exe" },
-      "args": ["-m", "pytest", "-k", "problem_${input:problem}"],
+      "command": "bash",
+      "args": ["-c", "[ -d .venv ] || bash setup.sh; .venv/bin/python -m pytest -k problem_${input:problem}"],
+      "windows": {
+        "command": "powershell",
+        "args": ["-c", "if (!(Test-Path .venv)) { .\\setup.ps1 }; .\\.venv\\Scripts\\python.exe -m pytest -k problem_${input:problem}"]
+      },
       "group": "test",
       "problemMatcher": []
     }
